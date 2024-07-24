@@ -92,6 +92,10 @@ def Image_processor():
             size = st.text_input('请输入大小（不写默认不改动；格式为：宽,高  请用英文半角逗号）')
             try:
                 width, height = [int(i) for i in size.split(',')]
+                if width < 10:
+                    width = 10
+                elif height < 10:
+                    height = 10
             except:
                 st.write('输入错误，将不更改大小')
                 width, height = img.size
@@ -272,7 +276,7 @@ def img_change_co(img):
             b = img_array[x, y][2]
             # RGB值中，哪个更大，就再大一些
             rgb = [r, g, b]
-            m == rgb.index(max(rgb))
+            m = rgb.index(max(rgb))
             if rgb[m] >= 200:
                 rgb[m] = 255
             else:
