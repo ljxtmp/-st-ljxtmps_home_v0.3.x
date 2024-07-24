@@ -7,12 +7,15 @@ import json
 
 def Home():
     '''首页'''
-    st.write('首页')
+    st.write('#首页')
     st.write('')
     st.write('在左侧边栏选择功能，开始使用吧~')
 
 def Hobbies():
     '''我的兴趣推荐'''
+    st.write('#我的兴趣推荐')
+    st.write('')
+    st.write('')
     st.write('我的兴趣：')
     st.write('')
     col3, col4, col5 = st.columns([1, 1, 1])
@@ -49,7 +52,7 @@ def Hobbies():
 
 def Calculator():
     '''计算器'''
-    st.write('计算器')
+    st.write('#计算器')
     # 创建算式输入框
     content = st.text_input('请输入算式  --注意：加号+，减号-，乘号*，除号/，乘方**，开方请转换为乘方（转换方法：n次根号a = a**(1/n)），括号一律用()')
     if content:
@@ -64,7 +67,7 @@ def Calculator():
 
 def Image_processor():
     '''图片处理工具'''
-    st.write('图片处理小程序')
+    st.write('#图片处理工具')
     uploaded_file = st.file_uploader('上传图片', type=['jpg', 'png', 'jpeg'])
     if uploaded_file:
         file_name = uploaded_file.name
@@ -109,7 +112,7 @@ def Image_processor():
 
 def Dictionary():
     '''智慧词典'''
-    st.write('智慧词典')
+    st.write('#智慧词典')
     # 从本地文件中将词典信息读取出来，并存储在列表中
     with open('words_space.txt', 'r', encoding='utf-8') as f:
         words_list = f.readlines()
@@ -144,10 +147,14 @@ def Dictionary():
                     print('hello world')
                     ''')
     elif word:
-        st.write(f'抱歉，暂时没有您想查询的单词{word}')
+        col3, col4 = st.columns([3, 2])
+        with col3:
+            st.write(f'抱歉，暂时没有您想查询的单词{word}')
+        with col4:
+            st.link_button(f'去百度翻译查询{word}', f'https://fanyi.baidu.com/mtpe-individual/multimodal?query={word}&lang=en2zh')
         st.write('')
         request = st.text_input(f'想要反馈？请输入单词{word}的词性及意思，点击按钮提交反馈')
-        col1, col2 = st.columns([1, 9])
+        col1, col2 = st.columns([1, 5])
         with col1:
             if_request = st.button('反馈')
         with col2:
@@ -155,33 +162,37 @@ def Dictionary():
                 with open('dict_requests.txt', 'a', encoding='utf-8') as f:
                     request = word + '#' + request + '\n'
                     f.write(request)
-                st.write('反馈成功！我们将尽快处理。')
+                st.write('感谢您的反馈！我们将尽快处理。')
 
 def Web_guide():
     '''网址导航'''
-    st.write('网址导航')
+    st.write('#网址导航')
     st.write('')
     col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
     with col1:
         st.link_button('百度一下', 'https://www.baidu.com/')
         st.write('')
         st.link_button('文件传输助手', 'https://filehelper.weixin.qq.com/')
+        st.write('')
     with col2:
         st.link_button('百度图片', 'https://image.baidu.com/')
         st.write('')
         st.link_button('百度网盘', 'https://pan.baidu.com/')
+        st.write('')
     with col3:
         st.link_button('Bilibili', 'https://www.bilibili.com/')
         st.write('')
         st.link_button('百度翻译', 'https://fanyi.baidu.com/')
+        st.write('')
     with col4:
         st.link_button('编程猫社区', 'https://shequ.codemao.cn/')
         st.write('')
         st.link_button('搜狗搜索', 'https://www.sogou.com/')
+        st.write('')
 
 def RGB_designer():
     '''RGB调色板'''
-    st.write('RGB调色板')
+    st.write('#RGB调色板')
     col1, _, col2 = st.columns([5, 1, 2])
     with col1:
         # 设置RGB的值
@@ -201,7 +212,7 @@ def RGB_designer():
 
 def Message_box():
     '''留言区'''
-    st.write('留言区')
+    st.write('#留言区')
     with open('leave_messages.json', 'r', encoding='utf-8') as f:
         messages_list = json.load(f)
     for i in messages_list:
@@ -213,7 +224,7 @@ def Message_box():
                 st.text(i[1] + ' : ' + i[2])
     name = st.text_input('我是……')
     new_message = st.text_input('想要说的话……')
-    col1, col2 = st.columns([1, 9])
+    col1, col2 = st.columns([1, 5])
     with col1:
         if_leave_message = st.button('留言')
     with col2:
@@ -287,8 +298,6 @@ def new_slider(label, _, min=0, max=100, origin=None):
         st.write('')
         st.write('')
         st.write(label)
-        st.write('')
-        st.write('')
     with col2:
         slider = st.slider(_, min, max, origin)
     return slider
