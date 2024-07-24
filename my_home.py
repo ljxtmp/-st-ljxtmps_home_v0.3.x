@@ -7,13 +7,13 @@ import json
 
 def Home():
     '''首页'''
-    st.write('#首页')
+    st.write('# 首页')
     st.write('')
     st.write('在左侧边栏选择功能，开始使用吧~')
 
 def Hobbies():
     '''我的兴趣推荐'''
-    st.write('#我的兴趣推荐')
+    st.write('# 我的兴趣推荐')
     st.write('')
     st.write('')
     st.write('我的兴趣：')
@@ -52,7 +52,7 @@ def Hobbies():
 
 def Calculator():
     '''计算器'''
-    st.write('#计算器')
+    st.write('# 计算器')
     # 创建算式输入框
     content = st.text_input('请输入算式  --注意：加号+，减号-，乘号*，除号/，乘方**，开方请转换为乘方（转换方法：n次根号a = a**(1/n)），括号一律用()')
     if content:
@@ -67,7 +67,7 @@ def Calculator():
 
 def Image_processor():
     '''图片处理工具'''
-    st.write('#图片处理工具')
+    st.write('# 图片处理工具')
     uploaded_file = st.file_uploader('上传图片', type=['jpg', 'png', 'jpeg'])
     if uploaded_file:
         file_name = uploaded_file.name
@@ -112,7 +112,7 @@ def Image_processor():
 
 def Dictionary():
     '''智慧词典'''
-    st.write('#智慧词典')
+    st.write('# 智慧词典')
     # 从本地文件中将词典信息读取出来，并存储在列表中
     with open('words_space.txt', 'r', encoding='utf-8') as f:
         words_list = f.readlines()
@@ -166,7 +166,7 @@ def Dictionary():
 
 def Web_guide():
     '''网址导航'''
-    st.write('#网址导航')
+    st.write('# 网址导航')
     st.write('')
     col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
     with col1:
@@ -192,7 +192,7 @@ def Web_guide():
 
 def RGB_designer():
     '''RGB调色板'''
-    st.write('#RGB调色板')
+    st.write('# RGB调色板')
     col1, _, col2 = st.columns([5, 1, 2])
     with col1:
         # 设置RGB的值
@@ -212,7 +212,7 @@ def RGB_designer():
 
 def Message_box():
     '''留言区'''
-    st.write('#留言区')
+    st.write('# 留言区')
     with open('leave_messages.json', 'r', encoding='utf-8') as f:
         messages_list = json.load(f)
     for i in messages_list:
