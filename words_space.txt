@@ -1,4 +1,4 @@
-1#abandon#v.抛弃，放弃#
+﻿1#abandon#v.抛弃，放弃#
 2#abandonment#n.放弃#
 3#abbreviation#n.缩写#
 4#abeyance#n.缓办，中止#
@@ -7978,3 +7978,5 @@
 7985#zoo#n.动物园#
 7986#zoology#n.动物学#
 7987#Python#n.Python语言#
+7988#server#n.服务器#
+7989#outing#n.出游#

@@ -1,2 +1,1 @@
-server#n.服务器
-outing#n.出游
+﻿
