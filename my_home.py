@@ -10,6 +10,9 @@ def Home():
     st.write('# 首页')
     st.write('')
     st.write('在左侧边栏选择功能，开始使用吧~')
+    st.write('')
+    st.write('')
+    st.write('*v0.3.2*')
 
 def Hobbies():
     '''我的兴趣推荐'''
@@ -220,12 +223,7 @@ def Message_box():
     with open('leave_messages.json', 'r', encoding='utf-8') as f:
         messages_list = json.load(f)
     for i in messages_list:
-        if i[1] == 'Liu':
-            with st.chat_message('🌞'):
-                st.write('站长 : ' + i[2])
-        else:
-            with st.chat_message('🍥'):
-                st.text(i[1] + ' : ' + i[2])
+        display_message(i)
     name = st.text_input('我是……')
     new_message = st.text_input('想要说的话……')
     col1, col2 = st.columns([1, 5])
@@ -233,11 +231,19 @@ def Message_box():
         if_leave_message = st.button('留言')
     with col2:
         if if_leave_message:
-            messages_list.append([str(int(messages_list[-1][0])+1), name, new_message])
+            message = [str(int(messages_list[-1][0])+1), name, new_message]
+            messages_list.append(message)
             with open('leave_messages.json', 'w', encoding='utf-8') as f:
                 json.dump(messages_list, f)
             st.write('留言成功')
 
+def display_message(i):
+    if i[1] == 'Liu':
+        with st.chat_message('🌞'):
+            st.write('站长 : ' + i[2])
+    else:
+        with st.chat_message('🍥'):
+            st.text(i[1] + ' : ' + i[2])
 
 def img_change(img, rc=0, gc=0, bc=0):
     '''图片处理'''
