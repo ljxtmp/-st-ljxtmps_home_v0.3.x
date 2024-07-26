@@ -97,7 +97,7 @@ def Image_processor():
                 width, height = [int(i) for i in size.split(',')]
                 if width < 10:
                     width = 10
-                elif height < 10:
+                if height < 10:
                     height = 10
             except:
                 st.write('输入错误，将不更改大小')
