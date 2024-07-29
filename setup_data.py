@@ -8,6 +8,3 @@ def setup_data():
     times_dict = {}
     with open('check_out_times.json', 'w', encoding='utf-8') as f:
         json.dump(times_dict, f)
-
-if __name__ == '__main__':
-    setup_data()
