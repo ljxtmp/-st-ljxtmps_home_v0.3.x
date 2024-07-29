@@ -8,8 +8,3 @@ def read_data():
         times_dict = json.load(f)
 
     return (messages_list, times_dict)
-
-if __name__ == '__main__':
-    messages_list, times_dict = read_data()
-    print(messages_list)
-    print(times_dict)
