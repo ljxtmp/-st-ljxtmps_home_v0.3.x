@@ -188,8 +188,10 @@ def Dictionary():
                         f.write(request)
                     st.write('感谢您的反馈！我们将尽快处理。')
     with col6:
+        requests = '''用户反馈单词信息：
+        '''
         with open('dict_requests.txt', 'r', encoding='utf-8') as f:
-            requests = f.read()
+            requests += f.read()
         st.code(requests)
 
 def Web_guide():
