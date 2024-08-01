@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import json
+import random
 
 
 def Home():
@@ -12,7 +13,21 @@ def Home():
     st.write('在左侧边栏选择功能，开始使用吧~')
     st.write('')
     st.write('')
-    st.write('*v0.3.2*')
+    st.write('*v0.3.3*')
+    st.write('----------------')
+    st.write('今日人品')
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        if_luck = st.button('点击查看')
+    with col2:
+        if if_luck:
+            luck = random.randint(0, 100)
+            if luck <= 40:
+                st.write(f'今日人品：{str(luck)}。今天运气有点差哦。')
+            elif luck <= 80:
+                st.write(f'今日人品：{str(luck)}。今天运气还好哦。')
+            else:
+                st.write(f'今日人品：{str(luck)}。今天运气不错哦。')
 
 def Hobbies():
     '''我的兴趣推荐'''
@@ -120,56 +135,62 @@ def Image_processor():
 def Dictionary():
     '''智慧词典'''
     st.write('# 智慧词典')
-    # 从本地文件中将词典信息读取出来，并存储在列表中
-    with open('words_space.txt', 'r', encoding='utf-8') as f:
-        words_list = f.readlines()
-    words_list = [i.split('#') for i in words_list]
-    # 将列表中的内容导入字典，方便查询，格式为“单词：编号、解释”
-    words_dict = {}
-    for i in words_list:
-        words_dict[i[1]] = [i[0], i[2]]
-    # 从本地文件中将单词的查询次数读取出来，并存储在字典中，格式为“编号：次数”
-    with open('check_out_times.json', 'r') as f:
-        times_dict = json.load(f)
-    # 创建输入框
-    word = st.text_input('请输入要查询的单词')
-    # 显示查询内容
-    if word in words_dict:
-        st.write(word)
-        n, meaning = words_dict[word]
-        st.write(meaning)
-        # 查询次数更新
-        if n in times_dict:
-            times_dict[n] += 1
-        else:
-            times_dict[n] = 1
-        # 查询次数储存
-        with open('check_out_times.json', 'w') as f:
-            json.dump(times_dict, f)
-        st.write('查询次数：', times_dict[n])       
-        # 彩蛋
-        if word == 'Python':
-            st.code('''
-                    # 恭喜你触发彩蛋，这是一行Python代码
-                    print('hello world')
-                    ''')
-    elif word:
-        col3, col4 = st.columns([3, 2])
-        with col3:
-            st.write(f'抱歉，暂时没有您想查询的单词{word}')
-        with col4:
-            st.link_button(f'去百度翻译查询{word}', f'https://fanyi.baidu.com/mtpe-individual/multimodal?query={word}&lang=en2zh')
-        st.write('')
-        request = st.text_input(f'想要反馈？请输入单词{word}的词性及意思，点击按钮提交反馈')
-        col1, col2 = st.columns([1, 5])
-        with col1:
-            if_request = st.button('反馈')
-        with col2:
-            if if_request:
-                with open('dict_requests.txt', 'a', encoding='utf-8') as f:
-                    request = word + '#' + request + '\n'
-                    f.write(request)
-                st.write('感谢您的反馈！我们将尽快处理。')
+    col5, col6 = st.columns([3, 2])
+    with col5:
+        # 从本地文件中将词典信息读取出来，并存储在列表中
+        with open('words_space.txt', 'r', encoding='utf-8') as f:
+            words_list = f.readlines()
+        words_list = [i.split('#') for i in words_list]
+        # 将列表中的内容导入字典，方便查询，格式为“单词：编号、解释”
+        words_dict = {}
+        for i in words_list:
+            words_dict[i[1]] = [i[0], i[2]]
+        # 从本地文件中将单词的查询次数读取出来，并存储在字典中，格式为“编号：次数”
+        with open('check_out_times.json', 'r') as f:
+            times_dict = json.load(f)
+        # 创建输入框
+        word = st.text_input('请输入要查询的单词')
+        # 显示查询内容
+        if word in words_dict:
+            st.write(word)
+            n, meaning = words_dict[word]
+            st.write(meaning)
+            # 查询次数更新
+            if n in times_dict:
+                times_dict[n] += 1
+            else:
+                times_dict[n] = 1
+            # 查询次数储存
+            with open('check_out_times.json', 'w') as f:
+                json.dump(times_dict, f)
+            st.write('查询次数：', times_dict[n])       
+            # 彩蛋
+            if word == 'Python':
+                st.code('''
+                        # 恭喜你触发彩蛋，这是一行Python代码
+                        print('hello world')
+                        ''')
+        elif word:
+            col3, col4 = st.columns([3, 2])
+            with col3:
+                st.write(f'抱歉，暂时没有您想查询的单词{word}')
+            with col4:
+                st.link_button(f'去百度翻译查询{word}', f'https://fanyi.baidu.com/mtpe-individual/multimodal?query={word}&lang=en2zh')
+            st.write('')
+            request = st.text_input(f'想要反馈？请输入单词{word}的词性及意思，点击按钮提交反馈')
+            col1, col2 = st.columns([1, 5])
+            with col1:
+                if_request = st.button('反馈')
+            with col2:
+                if if_request:
+                    with open('dict_requests.txt', 'a', encoding='utf-8') as f:
+                        request = word + '#' + request + '\n'
+                        f.write(request)
+                    st.write('感谢您的反馈！我们将尽快处理。')
+    with col6:
+        with open('dict_requests.txt', 'r', encoding='utf-8') as f:
+            requests = f.read()
+        st.code(requests)
 
 def Web_guide():
     '''网址导航'''
