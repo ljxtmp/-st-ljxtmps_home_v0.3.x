@@ -1,9 +1,10 @@
-'''python -m streamlit run E:\编程文件\上课\2024夏季创赛营\我的网络根据地程序包-学生\我的主页\my_home.py'''
+''''''
 import streamlit as st
 import pandas as pd
 from PIL import Image
 import json
 import random
+import time
 
 
 def Home():
@@ -21,13 +22,24 @@ def Home():
         if_luck = st.button('点击查看')
     with col2:
         if if_luck:
-            luck = random.randint(0, 100)
-            if luck <= 40:
-                st.write(f'今日人品：{str(luck)}。今天运气有点差哦。')
-            elif luck <= 80:
-                st.write(f'今日人品：{str(luck)}。今天运气还好哦。')
+            if check_date() == 'AFD':
+                luck = random.randint(-100, 0)
+                st.write(f'今日人品：{str(luck)}。愚人节快乐！')
+            if check_date() == 'ND':
+                luck = random.randint(81, 100)
+                st.write(f'今日人品：{str(luck)}。国庆节快乐！')
             else:
-                st.write(f'今日人品：{str(luck)}。今天运气不错哦。')
+                luck = random.randint(0, 100)
+                if luck == 0:
+                    st.write(f'今日人品：{str(luck)}。从某种意义上来说还是很欧的。')
+                elif luck == 100:
+                    st.write(f'今日人品：{str(luck)}。今天运气爆棚！')
+                elif luck <= 40:
+                    st.write(f'今日人品：{str(luck)}。今天运气有点差哦。')
+                elif luck <= 80:
+                    st.write(f'今日人品：{str(luck)}。今天运气还好哦。')
+                else:
+                    st.write(f'今日人品：{str(luck)}。今天运气不错哦。')
 
 def Hobbies():
     '''我的兴趣推荐'''
@@ -242,23 +254,27 @@ def RGB_designer():
 
 def Message_box():
     '''留言区'''
-    st.write('# 留言区')
-    with open('leave_messages.json', 'r', encoding='utf-8') as f:
-        messages_list = json.load(f)
-    for i in messages_list:
-        display_message(i)
-    name = st.text_input('我是……')
-    new_message = st.text_input('想要说的话……')
-    col1, col2 = st.columns([1, 5])
-    with col1:
-        if_leave_message = st.button('留言')
-    with col2:
-        if if_leave_message:
-            message = [str(int(messages_list[-1][0])+1), name, new_message]
-            messages_list.append(message)
-            with open('leave_messages.json', 'w', encoding='utf-8') as f:
-                json.dump(messages_list, f)
-            st.write('留言成功')
+    col3, col4 = st.columns([1, 1])
+    with col4:
+        name = st.text_input('我是……')
+        new_message = st.text_input('想要说的话……')
+        col1, col2 = st.columns([1, 5])
+        with col1:
+            if_leave_message = st.button('留言')
+        with col2:
+            if if_leave_message:
+                message = [str(int(messages_list[-1][0])+1), name, new_message]
+                messages_list.append(message)
+                with open('leave_messages.json', 'w', encoding='utf-8') as f:
+                    json.dump(messages_list, f)
+                st.write('留言成功')
+    with col3:
+        st.write('# 留言区')
+        with open('leave_messages.json', 'r', encoding='utf-8') as f:
+            messages_list = json.load(f)
+        for i in messages_list:
+            display_message(i)
+    
 
 def display_message(i):
     if i[1] == 'Liu':
@@ -335,6 +351,18 @@ def new_slider(label, _, min=0, max=100, origin=None):
         slider = st.slider(_, min, max, origin)
     return slider
 
+def check_date():
+    time_dict = time.localtime(time.time())
+    year, month, day = time.strftime('%Y#%m#%d', time_dict).split('#')
+    if month == '10' and day = '01':
+        return 'ND'
+    if month = '04' and day = '01':
+        return 'AFD'
+    if month = '07' and day = '23':
+        return f'WBD{str(int(year)-2024)}'
+    else:
+        return '-'.join([year, month, day])
+
 def main():
     page = st.sidebar.radio('我的主页', ['首页', '我的兴趣推荐', '计算器', '图片处理工具', '智慧词典', '网址导航', 'RGB调色板', '留言区'])
 
@@ -354,7 +382,17 @@ def main():
         RGB_designer()
     elif page == '留言区':
         Message_box()
-    
+        
+    if check_date() == 'ND':
+        st.write('----------------')
+        nf = Image.open('China.jpg')
+        nf = nf.resize((300, 200))
+        st.image(nf)
+    if 'WBD' in check_date():
+        y = int(chech_date()[3:])
+        st.write('----------------')
+        st.write(f'祝贺建站{str(y)}周年！')
+
     st.write('----------------')
     with open('bgm.mp3', 'rb') as f:
         bgm = f.read()
