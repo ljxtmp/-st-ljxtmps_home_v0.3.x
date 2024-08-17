@@ -354,11 +354,11 @@ def new_slider(label, _, min=0, max=100, origin=None):
 def check_date():
     time_dict = time.localtime(time.time())
     year, month, day = time.strftime('%Y#%m#%d', time_dict).split('#')
-    if month == '10' and day = '01':
+    if month == '10' and day == '01':
         return 'ND'
-    if month = '04' and day = '01':
+    if month == '04' and day == '01':
         return 'AFD'
-    if month = '07' and day = '23':
+    if month == '07' and day == '23':
         return f'WBD{str(int(year)-2024)}'
     else:
         return '-'.join([year, month, day])
