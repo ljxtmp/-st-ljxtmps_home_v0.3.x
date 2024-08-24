@@ -14,7 +14,7 @@ def Home():
     st.write('在左侧边栏选择功能，开始使用吧~')
     st.write('')
     st.write('')
-    st.write('*v0.3.3*')
+    st.write('*v0.3.5*')
     st.write('----------------')
     st.write('今日人品')
     col1, col2 = st.columns([1, 5])
@@ -256,9 +256,10 @@ def Message_box():
     '''留言区'''
     col3, col4 = st.columns([1, 1])
     with col4:
+        messages_list = load_messages()
         name = st.text_input('我是……')
         new_message = st.text_input('想要说的话……')
-        col1, col2 = st.columns([1, 5])
+        col1, col2 = st.columns([1, 3])
         with col1:
             if_leave_message = st.button('留言')
         with col2:
@@ -270,11 +271,14 @@ def Message_box():
                 st.write('留言成功')
     with col3:
         st.write('# 留言区')
-        with open('leave_messages.json', 'r', encoding='utf-8') as f:
-            messages_list = json.load(f)
+        messages_list = load_messages()
         for i in messages_list:
             display_message(i)
-    
+
+def load_messages():
+    with open('leave_messages.json', 'r', encoding='utf-8') as f:
+        messages_list = json.load(f)
+    return messages_list
 
 def display_message(i):
     if i[1] == 'Liu':
