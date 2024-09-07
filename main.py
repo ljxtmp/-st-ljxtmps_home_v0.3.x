@@ -15,6 +15,7 @@ def Home():
     st.write('')
     st.write('')
     st.write('*v0.3.5*')
+    st.write('我的工具箱v0.4.0 开放公测啦！公测网址：https://ljxtmpstoolboxbeta.streamlit.app')
     st.write('----------------')
     st.write('今日人品')
     col1, col2 = st.columns([1, 5])
